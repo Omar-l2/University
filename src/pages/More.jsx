@@ -71,7 +71,7 @@ const More = () => {
             </h2>
             <button
               onClick={() => {
-                Navigate(`/Courses/${course.name}`);
+                Navigate(`/SubCourse/${course.name}`);
               }}
               className="bg-purple-500 hover:bg-purple-700 w-full  text-xl text-white font-bold py-2 px-4 rounded"
             >

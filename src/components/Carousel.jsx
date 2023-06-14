@@ -49,7 +49,7 @@ const CarouselComponent = () => {
               <h2 className="text-2xl dark:text-gray-300 font-bold">
                 {item.title}
               </h2>
-              <NavLink to={`/Courses/${item.title}`}>
+              <NavLink to={`/SubCourse/${item.title}`}>
                 <button className="mt-4 px-4 py-2 w-40 text-xl bg-purple-400 text-white rounded-3xl">
                   {item.buttonLabel}
                 </button>

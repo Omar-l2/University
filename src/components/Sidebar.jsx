@@ -100,7 +100,7 @@ const Sidebar = () => {
               {Courses.map((courses) => (
                 <NavLink
                   key={courses.name + 1}
-                  to={`/Courses/${courses.name}`}
+                  to={`/SubCourse/${courses.name}`}
                   onClick={handleCloseSideBar}
                   style={({ isActive }) => ({
                     backgroundColor: isActive ? currentColor : "",
@@ -128,75 +128,83 @@ const Sidebar = () => {
               </NavLink>
             </div>
             {/* Create Course */}
-            <div>
-              <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase font-extrabold text-2xl">
-                انشاء دورة
-              </p>
-              <NavLink
-                to="/NewCourse"
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : "",
-                })}
-                className={({ isActive }) =>
-                  isActive ? activeLink : normalLink
-                }
-              >
-                <AiOutlineFile size={22} />
-                <span className="capitalize text-xl">انشاء درس</span>
-              </NavLink>
-              <NavLink
-                to="/NewTest"
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : "",
-                })}
-                className={({ isActive }) =>
-                  isActive ? activeLink : normalLink
-                }
-              >
-                <AiOutlineBulb size={22} />
-                <span className="capitalize text-xl">انشاء اختبار</span>
-              </NavLink>
-            </div>
-            <div>
-              <div class="mx-4">
-                <div
-                  class="relative flex flex-col min-w-0 break-words p-4 bg-purple-300 border-0 shadow-none rounded-2xl bg-clip-border"
-                  sidenav-card
+            {localStorage.getItem("userType") == "Teacher" ? (
+              <div>
+                <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase font-extrabold text-2xl">
+                  انشاء دورة
+                </p>
+                <NavLink
+                  to="/NewCourse"
+                  onClick={handleCloseSideBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
                 >
-                  <img
-                    class="w-1/2 mx-auto"
-                    src="../../assets/diamond.png"
-                    alt="Diamond"
-                  />
-                  <div class="flex-auto w-full p-4 pt-0 text-center">
-                    <h6 class="mb-0 mt-3 text-lg text-white ">
-                      الاشتراك الذهبي
-                    </h6>
-                    <p class="mb-0 text-lg font-semibold leading-tight text-white dark:opacity-60">
-                      أكتشف المزيد من الدورات مع العضوية الذهبية
-                    </p>
-                  </div>
-                  <button
-                    class=" mt-3 mb-3 inline-block w-full px-8 py-2 text-lg font-bold leading-normal text-center text-violet-400 align-middle transition-all ease-in bg-white border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
-                    onClick={() => {
-                      setPremium(true);
-                    }}
+                  <AiOutlineFile size={22} />
+                  <span className="capitalize text-xl">انشاء درس</span>
+                </NavLink>
+                {/* <NavLink
+                  to="/NewTest"
+                  onClick={handleCloseSideBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  <AiOutlineBulb size={22} />
+                  <span className="capitalize text-xl">انشاء اختبار</span>
+                </NavLink> */}
+              </div>
+            ) : (
+              <div></div>
+            )}
+            {localStorage.getItem("Premium") == "false" ? (
+              <div>
+                <div class="mx-4">
+                  <div
+                    class="relative flex flex-col min-w-0 break-words p-4 bg-purple-300 border-0 shadow-none rounded-2xl bg-clip-border"
+                    sidenav-card
                   >
-                    احصل
-                  </button>
-                  {openPremium ? (
-                    <Premium
-                      open={openPremium}
-                      onClose={() => {
-                        setPremium(false);
-                      }}
+                    <img
+                      class="w-1/2 mx-auto"
+                      src="../../assets/diamond.png"
+                      alt="Diamond"
                     />
-                  ) : null}
+                    <div class="flex-auto w-full p-4 pt-0 text-center">
+                      <h6 class="mb-0 mt-3 text-lg text-white ">
+                        الاشتراك الذهبي
+                      </h6>
+                      <p class="mb-0 text-lg font-semibold leading-tight text-white dark:opacity-60">
+                        أكتشف المزيد من الدورات مع العضوية الذهبية
+                      </p>
+                    </div>
+                    <button
+                      class=" mt-3 mb-3 inline-block w-full px-8 py-2 text-lg font-bold leading-normal text-center text-violet-400 align-middle transition-all ease-in bg-white border-0 rounded-lg shadow-md select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px"
+                      onClick={() => {
+                        setPremium(true);
+                      }}
+                    >
+                      احصل
+                    </button>
+                    {openPremium ? (
+                      <Premium
+                        open={openPremium}
+                        onClose={() => {
+                          setPremium(false);
+                        }}
+                      />
+                    ) : null}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </>
       )}

@@ -2,12 +2,43 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  var bcrypt = require("bcryptjs");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const SubmitForm = (e) => {
     e.preventDefault();
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+
+    // bcrypt.hash(password, 8, function (err, hash) {
+    //   setPassword(hash);
+    // });
+
+    // var raw1 = JSON.stringify({
+    //   username: email.substring(email.indexOf("@"), 0),
+    //   password: password,
+    // });
+
+    // var requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw1,
+    //   redirect: "follow",
+    // };
+
+    // fetch("http://localhost:8080//login", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => console.log("error", error));
+
     localStorage.setItem("email", email);
+    localStorage.setItem("userType", "Teacher");
+    localStorage.setItem("Premium", false);
     navigate("/");
   };
   return (

@@ -9,6 +9,8 @@ import {
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
+import Main from "./pages/Main/Main";
+import CreateTest from "./pages/CreateTest/CreateTest";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import {
   Dashboard,
@@ -74,16 +76,59 @@ const App = () => {
               {themeSettings && <ThemeSettings />}
               <Routes>
                 {/* Dashboard */}
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/Dashboard" element={<Dashboard />} />
+                <Route
+                  path="/"
+                  element={
+                    localStorage.getItem("email") ? <Dashboard /> : <Login />
+                  }
+                />
+                <Route
+                  path="/Dashboard"
+                  element={
+                    localStorage.getItem("email") ? <Dashboard /> : <Login />
+                  }
+                />
                 {/* Pages */}
-                <Route path="/Customers" element={<Customers />} />
-                <Route path="/Calender" element={<Calender />} />
-                <Route path="/More" element={<More />} />
-                <Route path="/NewCourse" element={<CreateCourse />} />
+                <Route
+                  path="/Customers"
+                  element={
+                    localStorage.getItem("email") ? <Customers /> : <Login />
+                  }
+                />
+                <Route
+                  path="/Calender"
+                  element={
+                    localStorage.getItem("email") ? <Calender /> : <Login />
+                  }
+                />
+                <Route
+                  path="/More"
+                  element={localStorage.getItem("email") ? <More /> : <Login />}
+                />
+                {/* <Route
+                  path="/CreateTest"
+                  element={
+                    localStorage.getItem("email") ? <CreateTest /> : <Login />
+                  }
+                /> */}
+                <Route
+                  path="/NewCourse"
+                  element={
+                    localStorage.getItem("email") ? <CreateCourse /> : <Login />
+                  }
+                />
+                <Route
+                  path="/SubCourse/:id"
+                  element={localStorage.getItem("email") ? <Main /> : <Login />}
+                />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Register" element={<Register />} />
-                <Route path="/Courses/:id" element={<CourseEx />} />
+                <Route
+                  path="/Courses/:id"
+                  element={
+                    localStorage.getItem("email") ? <CourseEx /> : <Login />
+                  }
+                />
               </Routes>
             </div>
           </div>

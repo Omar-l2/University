@@ -2,11 +2,48 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  var bcrypt = require("bcryptjs");
   const navigate = useNavigate();
   const [userType, setUserType] = useState("طالب");
+  const [name, setName] = useState("");
+  const [sname, setSName] = useState("");
+  // const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
+  };
+
+  const SubmitForm = (e) => {
+    e.preventDefault();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    bcrypt.hash(password, 8, function (err, hash) {
+      setPassword(hash);
+    });
+    var raw1 = JSON.stringify({
+      firstName: name,
+      lastName: sname,
+      email: email,
+      username: name + " " + sname,
+      password: password,
+      role: userType,
+    });
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw1,
+      redirect: "follow",
+    };
+    fetch("http://localhost:8080/register", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+
+    navigate("/Login");
   };
 
   return (
@@ -33,7 +70,12 @@ export default function Register() {
         <div class="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
       <div class="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form class="bg-white">
+        <form
+          onSubmit={(e) => {
+            SubmitForm(e);
+          }}
+          class="bg-white"
+        >
           <h1 class="text-gray-800 font-bold text-2xl mb-1">مرحبا مجدا</h1>
           <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
@@ -55,9 +97,38 @@ export default function Register() {
               name=""
               id=""
               placeholder="اسم الكامل"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
           </div>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <input
+              class="pl-2 outline-none border-none"
+              type="text"
+              name=""
+              id=""
+              placeholder="اسم الثاني"
+              value={sname}
+              onChange={(e) => {
+                setSName(e.target.value);
+              }}
+            />
+          </div>
+          {/* <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5 text-gray-400"
@@ -85,8 +156,12 @@ export default function Register() {
               name=""
               id=""
               placeholder="رقم الهاتف"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
             />
-          </div>
+          </div> */}
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +183,10 @@ export default function Register() {
               name=""
               id=""
               placeholder="بريد الاكتروني"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
           </div>
           <div class="flex items-center border-2 py-2 px-3 mb-4 rounded-2xl">
@@ -129,6 +208,10 @@ export default function Register() {
               name=""
               id=""
               placeholder="كلمة المرور"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
           </div>
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
@@ -158,17 +241,15 @@ export default function Register() {
               مدرس
             </label>
           </div>
-          <NavLink to={"/Login"}>
-            <button
-              type="submit"
-              class="block w-full bg-purple-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-              onClick={() => {
-                navigate("Register");
-              }}
-            >
-              انشاء حساب
-            </button>
-          </NavLink>
+
+          <button
+            type="submit"
+            class="block w-full bg-purple-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+            onClick={() => {}}
+          >
+            انشاء حساب
+          </button>
+
           <NavLink to={"/Login"}>
             <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">
               لدي حساب اذهب الى تسجيل دخول

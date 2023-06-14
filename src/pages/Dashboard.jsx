@@ -130,7 +130,12 @@ const Dashboard = () => {
           </div>
           {ordersData.map((item, index) => {
             return (
-              <div className=" mt-2 flex-row-reverse flex-nowrap flex h-12 place-items-center shadow-[0px_0px_10px_1px_rgba(0,0,0,0.25)] rounded-2xl">
+              <div
+                className=" mt-2 flex-row-reverse flex-nowrap flex h-12 place-items-center shadow-[0px_0px_10px_1px_rgba(0,0,0,0.25)] rounded-2xl"
+                onClick={() => {
+                  Navigate("/SubCourse/" + item.CourseName);
+                }}
+              >
                 <div className="dark:text-white basis-1/3 pt-1 pr-2 text-right">
                   {item.CourseName}
                 </div>
