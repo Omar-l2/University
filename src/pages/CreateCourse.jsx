@@ -1,16 +1,52 @@
 import { Header } from "../components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const CreateCourse = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/course');
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
+        const data = await response.json();
+        setCourses(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    // You can access the form values using the state variables (category, title, subtitle, explanation)
+
+    const lessonData = {
+      title: subtitle,
+      body: explanation,
+    };
+
+    console.log(lessonData, category);
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(lessonData),
+    };
+
+    fetch(`http://localhost:8080/lesson/${category}/newLesson`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Lesson created:", data);
+      })
+      .catch((error) => console.error("Error:", error));
   };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">
@@ -33,12 +69,15 @@ const CreateCourse = () => {
             onChange={(e) => setCategory(e.target.value)}
             required
           >
-            <option className=" text-right" value="">
+            <option className="text-right" value="">
               اختر المسار
             </option>
-            <option value="math">Math</option>
-            <option value="science">Science</option>
-            <option value="history">History</option>
+            {courses.map((course) => (
+          <option key={course.id} value={course.id}>
+          {course.name}
+        </option>
+      ))}
+
           </select>
         </div>
 

@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 export default function Register() {
   var bcrypt = require("bcryptjs");
   const navigate = useNavigate();
-  const [userType, setUserType] = useState("طالب");
+  const [userType, setUserType] = useState("STUDENT");
   const [name, setName] = useState("");
   const [sname, setSName] = useState("");
   // const [phone, setPhone] = useState("");
@@ -12,38 +12,40 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
+    setUserType(event.target.value)
   };
 
   const SubmitForm = (e) => {
     e.preventDefault();
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+
     bcrypt.hash(password, 8, function (err, hash) {
       setPassword(hash);
     });
+
     var raw1 = JSON.stringify({
       firstName: name,
       lastName: sname,
       email: email,
-      username: name + " " + sname,
+      username: email.substring(email.indexOf("@"), 0),
       password: password,
       role: userType,
     });
+
     var requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw1,
       redirect: "follow",
     };
+
     fetch("http://localhost:8080/register", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
       })
       .catch((error) => console.log("error", error));
-
-    navigate("/Login");
   };
 
   return (
@@ -220,8 +222,8 @@ export default function Register() {
               type="radio"
               id="student"
               name="userType"
-              value="طالب"
-              checked={userType === "طالب"}
+              value="STUDENT"
+              checked={userType === "STUDENT"}
               onChange={handleUserTypeChange}
             />
             <label htmlFor="student" className="mr-2 ml-2">
@@ -233,8 +235,8 @@ export default function Register() {
               type="radio"
               id="teacher"
               name="userType"
-              value="مدرس"
-              checked={userType === "مدرس"}
+              value="TEACHER"
+              checked={userType === "TEACHER"}
               onChange={handleUserTypeChange}
             />
             <label htmlFor="teacher" className="mr-2 ml-2">

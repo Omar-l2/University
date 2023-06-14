@@ -7,39 +7,47 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const SubmitForm = (e) => {
+  const SubmitForm = async (e) => {
     e.preventDefault();
 
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-    // bcrypt.hash(password, 8, function (err, hash) {
-    //   setPassword(hash);
-    // });
+    const hash = await bcrypt.hash(password, 8);
+    setPassword(hash);
 
-    // var raw1 = JSON.stringify({
-    //   username: email.substring(email.indexOf("@"), 0),
-    //   password: password,
-    // });
+    var raw1 = JSON.stringify({
+      username: email.substring(email.indexOf("@"), 0),
+      password: password,
+    });
 
-    // var requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw1,
-    //   redirect: "follow",
-    // };
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw1,
+      redirect: "follow",
+    };
 
-    // fetch("http://localhost:8080//login", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => console.log("error", error));
+    console.log(requestOptions);
 
-    localStorage.setItem("email", email);
-    localStorage.setItem("userType", "Teacher");
-    localStorage.setItem("Premium", false);
-    navigate("/");
+    fetch("http://localhost:8080/login", requestOptions)
+    .then((response) => {
+        if (!response.ok) {
+          throw new Error("Something went wrong!");
+        }
+        return response.json(); // Make sure to return the result of response.json()
+      })
+      .then((result) => {
+        if(result === undefined) {
+          alert("Account is not registered!")
+        } else {
+          localStorage.setItem("email", email);
+          localStorage.setItem("userType", "Teacher");
+          localStorage.setItem("Premium", false);
+          navigate("/")
+        }
+      })
+      .catch((error) => console.log("error", error));
   };
   return (
     <div style={{ zIndex: "1001" }} class="absolute inset-0 h-screen md:flex">
@@ -91,7 +99,7 @@ const Login = () => {
             <input
               required
               class="pl-2 outline-none border-none"
-              type="text"
+              type="email"
               name=""
               id=""
               value={email}
@@ -117,7 +125,7 @@ const Login = () => {
             <input
               required
               class="pl-2 outline-none border-none"
-              type="text"
+              type="password"
               name=""
               id=""
               placeholder="كلمة المرور"
