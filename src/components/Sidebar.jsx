@@ -128,7 +128,7 @@ const Sidebar = () => {
               </NavLink>
             </div>
             {/* Create Course */}
-            {localStorage.getItem("userType") == "Teacher" ? (
+            {localStorage.getItem("userType") == "TEACHER" ? (
               <div>
                 <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase font-extrabold text-2xl">
                   انشاء دورة
@@ -145,6 +145,19 @@ const Sidebar = () => {
                 >
                   <AiOutlineFile size={22} />
                   <span className="capitalize text-xl">انشاء درس</span>
+                </NavLink>
+                <NavLink
+                  to="/CreateCourseT"
+                  onClick={handleCloseSideBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  <AiOutlineFile size={22} />
+                  <span className="capitalize text-xl">انشاء الدورة</span>
                 </NavLink>
                 {/* <NavLink
                   to="/NewTest"

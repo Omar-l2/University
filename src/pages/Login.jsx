@@ -31,20 +31,21 @@ const Login = () => {
     console.log(requestOptions);
 
     fetch("http://localhost:8080/login", requestOptions)
-    .then((response) => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error("Something went wrong!");
         }
         return response.json(); // Make sure to return the result of response.json()
       })
       .then((result) => {
-        if(result === undefined) {
-          alert("Account is not registered!")
+        if (result === undefined) {
+          alert("Account is not registered!");
         } else {
           localStorage.setItem("email", email);
-          localStorage.setItem("userType", "Teacher");
+          localStorage.setItem("userType", result.role);
           localStorage.setItem("Premium", false);
-          navigate("/")
+          localStorage.setItem("name", result.firstName);
+          navigate("/");
         }
       })
       .catch((error) => console.log("error", error));

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { BsCurrencyDollar, BsArrowLeftShort } from "react-icons/bs";
-import { GoPrimitiveDot } from "react-icons/go";
 
 import {
   Stacked,
@@ -11,26 +10,10 @@ import {
   CarouselComponent,
 } from "../components";
 import { ordersData, ordersGrid } from "../data/grid";
-import { useStateContext } from "../contexts/ContextProvider";
+
 // import product9 from "../data/product9.jpg";
 
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Resize,
-  Sort,
-  ContextMenu,
-  Filter,
-  Page,
-  ExcelExport,
-  PdfExport,
-  Edit,
-  Inject,
-} from "@syncfusion/ej2-react-grids";
-import { Header } from "../components";
 import { Navigate, useNavigate } from "react-router-dom";
-import localforage from "localforage";
 
 const InfoCard = ({ text, infoImage, number }) => {
   return (
@@ -102,11 +85,11 @@ const Dashboard = () => {
           infoImage="../../assets/process.png"
           text="الدورات في التقديم"
         />
-        <InfoCard
+        {/* <InfoCard
           number="12"
           infoImage="../../assets/star.png"
           text="الشهادات"
-        />
+        /> */}
       </div>
 
       <div className="flex gap-10 flex-wrap justify-center">

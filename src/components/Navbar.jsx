@@ -66,13 +66,13 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
       <div className="flex">
-        <NavButton
+        {/* <NavButton
           title="Notifications"
           dotColor="#03C9D7"
           customFunc={() => handleClick("notification")}
           color="blue"
           icon={<RiNotification3Line />}
-        />
+        /> */}
         <NavButton
           title="Logout"
           customFunc={() => {
@@ -104,7 +104,7 @@ const Navbar = () => {
             </div>
           </TooltipComponent>
         </button>
-        {isClicked.notification && <Notification />}
+        {/* {isClicked.notification && <Notification />} */}
         {isClicked.userProfile && (
           <UserProfile
             open={openProfile}

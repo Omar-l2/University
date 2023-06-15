@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-
+import CreateCourseT from "./pages/CreateCourseT";
 import Main from "./pages/Main/Main";
 import CreateTest from "./pages/CreateTest/CreateTest";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
@@ -88,6 +88,17 @@ const App = () => {
                     localStorage.getItem("email") ? <Dashboard /> : <Login />
                   }
                 />
+                <Route
+                  path="/CreateCourseT"
+                  element={
+                    localStorage.getItem("email") &&
+                    localStorage.getItem("userType") == "TEACHER" ? (
+                      <CreateCourseT />
+                    ) : (
+                      <Login />
+                    )
+                  }
+                />
                 {/* Pages */}
                 <Route
                   path="/Customers"
@@ -114,7 +125,12 @@ const App = () => {
                 <Route
                   path="/NewCourse"
                   element={
-                    localStorage.getItem("email") ? <CreateCourse /> : <Login />
+                    localStorage.getItem("email") &&
+                    localStorage.getItem("userType") == "TEACHER" ? (
+                      <CreateCourse />
+                    ) : (
+                      <Dashboard />
+                    )
                   }
                 />
                 <Route

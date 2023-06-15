@@ -6,20 +6,26 @@ const CreateCourse = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [Language, setLanguage] = useState("c++");
   const [courses, setCourses] = useState([]);
-
+  const languages = [
+    { id: "cpp", name: "C++" },
+    { id: "js", name: "Javascript" },
+    { id: "java", name: "Java" },
+    { id: "csharp", name: "C#" },
+  ];
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8080/course');
+        const response = await fetch("http://localhost:8080/course");
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
         setCourses(data);
         console.log(data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -32,6 +38,7 @@ const CreateCourse = () => {
     const lessonData = {
       title: subtitle,
       body: explanation,
+      language: Language,
     };
 
     console.log(lessonData, category);
@@ -73,16 +80,15 @@ const CreateCourse = () => {
               اختر المسار
             </option>
             {courses.map((course) => (
-          <option key={course.id} value={course.id}>
-          {course.name}
-        </option>
-      ))}
-
+              <option key={course.id} value={course.id}>
+                {course.name}
+              </option>
+            ))}
           </select>
         </div>
 
-        <div className="flex mb-4">
-          <div className="w-1/2 pr-2">
+        <div className="flex flex-row-reverse mb-4">
+          <div className="w-1/3 pr-2">
             <label className="block mb-2  text-gray-700 text-xl font-semibold dark:text-gray-300">
               اسم المساق
             </label>
@@ -95,7 +101,7 @@ const CreateCourse = () => {
               required
             />
           </div>
-          <div className="w-1/2 pl-2">
+          <div className="w-1/3 pr-2">
             <label className="block mb-2  text-xl font-semibold text-gray-700 dark:text-gray-300">
               عنوان الدرس
             </label>
@@ -107,6 +113,30 @@ const CreateCourse = () => {
               onChange={(e) => setSubtitle(e.target.value)}
               required
             />
+          </div>
+          <div className="w-1/3 pr-2">
+            <label
+              htmlFor="نوع مسار الدورة"
+              className="block mb-2 text-xl font-semibold text-gray-700 dark:text-gray-300"
+            >
+              نوع اللغة{" "}
+            </label>
+            <select
+              id="Language"
+              className="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-700"
+              value={Language}
+              onChange={(e) => setLanguage(e.target.value)}
+              required
+            >
+              <option className="text-right" value="">
+                اختر اللغة
+              </option>
+              {languages.map((language) => (
+                <option key={language.id} value={language.id}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
