@@ -3,12 +3,34 @@ import classes from "./style";
 import CustomTitle from "../CustomTitle/CustomTitle";
 import strings from "../../Constants/strings";
 import colors from "../../Constants/colors";
-import { mockCourses, mockEvents } from "./helper";
-import UpcomingEvent from "../UpcomingEvent/UpcomingEvent";
 import Course from "../Course/Course";
-import { redirect, useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 const Main = () => {
+
+  const [course, setCourse] = useState([]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/course/' + location.pathname.slice("/SubCourse/".length));
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
+        const data = await response.json();
+        setCourse(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchCourses();
+  }, [location]);
+
+
   const style = classes();
   const navigate = useNavigate();
   return (
@@ -19,27 +41,32 @@ const Main = () => {
           bgColor={colors.testDark}
           withLine
         />
-        {mockCourses.map((course) => {
-          return (
-            <div
-              key={course.number}
-              onClick={() => {
-                if (!course.isClosed) {
-                  console.log("redirected");
-                  navigate(`/Courses/${course.name}`);
-                }
-              }}
-            >
-              <Course
-                number={course.number}
-                name={course.name}
-                image={course.image}
-                status={course.status}
-                isClosed={course.isClosed}
-              />
-            </div>
-          );
-        })}
+        <div className="container mx-auto">
+          {Array.isArray(course.lessons) && course.lessons.length > 0 ? (
+            course.lessons.map((lesson) => (
+              <div key={lesson.id}>
+                <div
+                  key={lesson.id}
+                  onClick={() => {
+                    if (!lesson.isClosed) {
+                      console.log("redirected");
+                      navigate(`/Courses/${lesson.id}`);
+                    }
+                  }}>
+                  <Course
+                    number={lesson.id}
+                    name={lesson.title}
+                    image={lesson.image}
+                    status={lesson.status}
+                    isClosed={lesson.isClosed}
+                  />
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>No lessons available</div>
+          )}
+        </div>
       </Grid>
       {/* <Grid item xs={3}>
         <CustomTitle
