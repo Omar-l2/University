@@ -52,7 +52,7 @@ export default function Register() {
     <div style={{ zIndex: "1001" }} class="absolute inset-0 h-screen md:flex">
       <div class=" relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-400 i justify-around items-center hidden">
         <div className=" p-20">
-          <h1 class="text-white font-bold text-4xl font-sans">
+          <h1 class="text-white font-bold text-4xl font-sans text-center">
             Codunity مرحبا بك في
           </h1>
           <p class="text-white text-xl mt-4">
@@ -78,8 +78,8 @@ export default function Register() {
           }}
           class="bg-white"
         >
-          <h1 class="text-gray-800 font-bold text-2xl mb-1">مرحبا مجدا</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">مرحبا بك</h1>
+          <p class="text-sm font-normal text-gray-600 mb-7 text-center">Welcome</p>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +96,10 @@ export default function Register() {
             <input
               class="pl-2 outline-none border-none"
               type="text"
+              required
               name=""
               id=""
-              placeholder="اسم الكامل"
+              placeholder="اسم الأول"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -121,6 +122,7 @@ export default function Register() {
             <input
               class="pl-2 outline-none border-none"
               type="text"
+              required
               name=""
               id=""
               placeholder="اسم الثاني"
@@ -181,7 +183,8 @@ export default function Register() {
             </svg>
             <input
               class="pl-2 outline-none border-none"
-              type="text"
+              type="email"
+              required
               name=""
               id=""
               placeholder="بريد الاكتروني"
@@ -206,7 +209,8 @@ export default function Register() {
             </svg>
             <input
               class="pl-2 outline-none border-none"
-              type="text"
+              type="password"
+              required
               name=""
               id=""
               placeholder="كلمة المرور"

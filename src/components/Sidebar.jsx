@@ -146,7 +146,7 @@ const Sidebar = () => {
                   <AiOutlineFile size={22} />
                   <span className="capitalize text-xl">انشاء درس</span>
                 </NavLink>
-                {/* <NavLink
+                <NavLink
                   to="/NewTest"
                   onClick={handleCloseSideBar}
                   style={({ isActive }) => ({
@@ -158,7 +158,7 @@ const Sidebar = () => {
                 >
                   <AiOutlineBulb size={22} />
                   <span className="capitalize text-xl">انشاء اختبار</span>
-                </NavLink> */}
+                </NavLink>
               </div>
             ) : (
               <div></div>

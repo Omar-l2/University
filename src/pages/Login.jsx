@@ -47,13 +47,13 @@ const Login = () => {
           navigate("/")
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => alert("Account is not registered!"));
   };
   return (
     <div style={{ zIndex: "1001" }} class="absolute inset-0 h-screen md:flex">
       <div class=" relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-400 i justify-around items-center hidden">
         <div className=" p-20">
-          <h1 class="text-white font-bold text-4xl font-sans">
+          <h1 class="text-white font-bold text-4xl font-sans text-center">
             Codunity مرحبا بك في
           </h1>
           <p class="text-white text-xl mt-4">
@@ -79,8 +79,8 @@ const Login = () => {
           }}
           class="bg-white"
         >
-          <h1 class="text-gray-800 font-bold text-2xl mb-1">مرحبا مجدا</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">مرحبا مجدداً</h1>
+          <p class="text-sm font-normal text-gray-600 mb-7 text-center">Welcome Back</p>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
