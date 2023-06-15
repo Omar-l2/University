@@ -7,7 +7,6 @@ import Course from "../Course/Course";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Main = () => {
-
   const [course, setCourse] = useState([]);
 
   const location = useLocation();
@@ -15,21 +14,23 @@ const Main = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8080/course/' + location.pathname.slice("/SubCourse/".length));
+        const response = await fetch(
+          "http://localhost:8080/course/" +
+            location.pathname.slice("/SubCourse/".length)
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
         setCourse(data);
         console.log(data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
     fetchCourses();
   }, [location]);
-
 
   const style = classes();
   const navigate = useNavigate();
@@ -52,11 +53,12 @@ const Main = () => {
                       console.log("redirected");
                       navigate(`/Courses/${lesson.id}`);
                     }
-                  }}>
+                  }}
+                >
                   <Course
                     number={lesson.id}
                     name={lesson.title}
-                    image={lesson.image}
+                    image={"/assets/CourseImage.png"}
                     status={lesson.status}
                     isClosed={lesson.isClosed}
                   />

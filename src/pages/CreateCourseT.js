@@ -1,11 +1,11 @@
 import { Header } from "../components";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourseT = () => {
   const [title, setTitle] = useState("");
-
   const [explanation, setExplanation] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -26,6 +26,8 @@ const CreateCourseT = () => {
         console.log("Lesson created:", data);
       })
       .catch((error) => console.error("Error:", error));
+
+    navigate("/More");
   };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">

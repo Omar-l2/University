@@ -3,20 +3,19 @@ import { Header } from "../components";
 import { useNavigate } from "react-router-dom";
 
 const More = () => {
-
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8080/course');
+        const response = await fetch("http://localhost:8080/course");
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
         setCourses(data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -35,7 +34,7 @@ const More = () => {
           >
             <div className="mb-2 h-4/5 w-full">
               <img
-                src={course.image}
+                src="/assets/CourseImage.png"
                 alt={course.name}
                 className="w-full h-auto object-contain"
               />
