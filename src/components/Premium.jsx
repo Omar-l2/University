@@ -1,10 +1,11 @@
+import zIndex from "@mui/material/styles/zIndex";
 import React from "react";
 
 export const Premium = ({ openPremium, onClose }) => {
   return (
-    <div className=" bg-opacity-60 bg-slate-500 fixed top-0 left-0 flex items-center justify-center w-full h-full">
+    <div className=" z-auto bg-opacity-60 bg-slate-500 fixed top-0 left-0 flex items-center justify-center w-full h-full">
       <div
-        className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+        className=" z-10 py-12 transition duration-150 ease-in-out  absolute top-0 right-0 bottom-0 left-0"
         id="modal"
       >
         <div

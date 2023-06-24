@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components";
 import { useState, useEffect } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
@@ -7,6 +7,8 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 export default function CourseEx() {
   const LessonID = useParams();
   const [lesson, setLesson] = useState("");
+  const [TestID, setTestID] = useState("");
+  const navigate = useNavigate();
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
   );
@@ -36,7 +38,7 @@ export default function CourseEx() {
       <div className="flex justify-center mt-8">
         <div className=" w-11/12 dark:bg-secondary-dark-bg bg-white rounded-lg shadow-lg p-6">
           <p className=" dark:text-white text-right text-xl">{lesson.body}</p>
-          <CodeEditor
+          {/* <CodeEditor
             value={code}
             language={"js"}
             placeholder="Please enter JS code."
@@ -48,7 +50,17 @@ export default function CourseEx() {
               fontFamily:
                 "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
             }}
-          />
+          /> */}
+          <div className=" flex justify-center">
+            <button
+              onClick={() => {
+                navigate(`/Test/${TestID}`);
+              }}
+              className=" w-1/12 px-4 text-xl py-2 bg-purple-600 text-white rounded-md"
+            >
+              اختبر
+            </button>
+          </div>
           <div className="flex justify-between mt-6">
             <button className=" w-1/12 text-xl px-4 py-2 bg-slate-500 text-white rounded-md">
               الرجوع

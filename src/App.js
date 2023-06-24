@@ -22,9 +22,9 @@ import {
   Register,
   CourseEx,
 } from "./pages";
-
 import "./App.css";
 import { useStateContext } from "./contexts/ContextProvider";
+import Test from "./pages/Test";
 
 const App = () => {
   const { activeMenu, currentMode, themeSettings, setThemeSettings } =
@@ -134,8 +134,23 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/NewTest"
+                  element={
+                    localStorage.getItem("email") &&
+                    localStorage.getItem("userType") == "TEACHER" ? (
+                      <CreateTest />
+                    ) : (
+                      <Dashboard />
+                    )
+                  }
+                />
+                <Route
                   path="/SubCourse/:id"
                   element={localStorage.getItem("email") ? <Main /> : <Login />}
+                />
+                <Route
+                  path="/Test/:id"
+                  element={localStorage.getItem("email") ? <Test /> : <Login />}
                 />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Register" element={<Register />} />

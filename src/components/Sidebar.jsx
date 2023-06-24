@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoMenuOutline, IoGrid, IoSettingsOutline } from "react-icons/io5";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
@@ -21,6 +21,24 @@ const Sidebar = () => {
       setActiveMenu(false);
     }
   };
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/course");
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses");
+        }
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <div className="top-2/4 w-11/12 ml-3 h-screen md md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       {activeMenu && (
@@ -97,22 +115,27 @@ const Sidebar = () => {
               <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase font-extrabold text-2xl">
                 الدورات
               </p>
-              {Courses.map((courses) => (
-                <NavLink
-                  key={courses.name + 1}
-                  to={`/SubCourse/${courses.name}`}
-                  onClick={handleCloseSideBar}
-                  style={({ isActive }) => ({
-                    backgroundColor: isActive ? currentColor : "",
-                  })}
-                  className={({ isActive }) =>
-                    isActive ? activeLink : normalLink
-                  }
-                >
-                  {courses.icon}
-                  <span className="capitalize text-xl">{courses.name}</span>
-                </NavLink>
-              ))}
+              {courses.map(
+                (coursearr, index) =>
+                  index < 3 && (
+                    <NavLink
+                      key={coursearr.id}
+                      to={`/SubCourse/${coursearr.id}`}
+                      onClick={handleCloseSideBar}
+                      style={({ isActive }) => ({
+                        backgroundColor: isActive ? currentColor : "",
+                      })}
+                      className={({ isActive }) =>
+                        isActive ? activeLink : normalLink
+                      }
+                    >
+                      {coursearr.icon}
+                      <span className="capitalize text-xl">
+                        {coursearr.name}
+                      </span>
+                    </NavLink>
+                  )
+              )}
               <NavLink
                 to="/More"
                 onClick={handleCloseSideBar}
@@ -205,12 +228,14 @@ const Sidebar = () => {
                       احصل
                     </button>
                     {openPremium ? (
-                      <Premium
-                        open={openPremium}
-                        onClose={() => {
-                          setPremium(false);
-                        }}
-                      />
+                      <div className=" z-20">
+                        <Premium
+                          open={openPremium}
+                          onClose={() => {
+                            setPremium(false);
+                          }}
+                        />
+                      </div>
                     ) : null}
                   </div>
                 </div>

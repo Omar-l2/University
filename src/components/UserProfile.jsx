@@ -1,9 +1,35 @@
 import { convertStringToValue } from "@syncfusion/ej2/maps";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { redirect } from "react-router-dom";
 
 const UserProfile = ({ open, onClose }) => {
   const [Edit, setEdit] = useState(false);
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [name, setName] = useState(localStorage.getItem("name"));
+  const EditDB = () => {
+    const userData = {
+      firstName: name,
+      email: email,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    };
+
+    fetch(
+      `http://localhost:8080/profile/${localStorage.getItem("userID")}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("User Updated:", data);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("name", data.firstName);
+      })
+      .catch((error) => console.error("Error:", error));
+  };
   return (
     <div className=" bg-opacity-60 bg-slate-500 fixed top-0 left-0 flex items-center justify-center w-full h-full">
       <div
@@ -35,7 +61,10 @@ const UserProfile = ({ open, onClose }) => {
               disabled={!Edit}
               id="name"
               className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-              value={localStorage.getItem("name")}
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
             <label
               htmlFor="email2"
@@ -44,16 +73,20 @@ const UserProfile = ({ open, onClose }) => {
               ايميل
             </label>
             <input
-              disabled={!Edit}
+              disabled
               id="email"
               className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-              value={localStorage.getItem("email")}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
 
             <div className="flex items-center justify-start w-full">
               <button
                 onClick={() => {
                   setEdit(!Edit);
+                  EditDB();
                 }}
                 className="focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm"
               >

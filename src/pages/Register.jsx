@@ -10,9 +10,10 @@ export default function Register() {
   // const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [zcustom, setZcustom] = useState("1001");
+  const [passHash, setPasshash] = useState("");
   const handleUserTypeChange = (event) => {
-    setUserType(event.target.value)
+    setUserType(event.target.value);
   };
 
   const SubmitForm = (e) => {
@@ -21,7 +22,7 @@ export default function Register() {
     myHeaders.append("Content-Type", "application/json");
 
     bcrypt.hash(password, 8, function (err, hash) {
-      setPassword(hash);
+      setPasshash(hash);
     });
 
     var raw1 = JSON.stringify({
@@ -29,7 +30,7 @@ export default function Register() {
       lastName: sname,
       email: email,
       username: email.substring(email.indexOf("@"), 0),
-      password: password,
+      password: passHash,
       role: userType,
     });
 
@@ -44,12 +45,17 @@ export default function Register() {
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
+        setZcustom("-1001");
+        navigate("/Login");
       })
       .catch((error) => console.log("error", error));
   };
 
   return (
-    <div style={{ zIndex: "1001" }} class="absolute inset-0 h-screen md:flex">
+    <div
+      style={{ zIndex: { zcustom } }}
+      class="absolute inset-0 h-screen md:flex"
+    >
       <div class=" relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-400 i justify-around items-center hidden">
         <div className=" p-20">
           <h1 class="text-white font-bold text-4xl font-sans text-center">
@@ -78,8 +84,12 @@ export default function Register() {
           }}
           class="bg-white"
         >
-          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">مرحبا بك</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7 text-center">Welcome</p>
+          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">
+            مرحبا بك
+          </h1>
+          <p class="text-sm font-normal text-gray-600 mb-7 text-center">
+            Welcome
+          </p>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"

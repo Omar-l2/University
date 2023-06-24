@@ -6,7 +6,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const [zcustom, setZcustom] = useState("1001");
+  const [passHash, setPasshash] = useState("");
   const SubmitForm = async (e) => {
     e.preventDefault();
 
@@ -14,11 +15,10 @@ const Login = () => {
     myHeaders.append("Content-Type", "application/json");
 
     const hash = await bcrypt.hash(password, 8);
-    setPassword(hash);
-
+    setPasshash(hash);
     var raw1 = JSON.stringify({
       username: email.substring(email.indexOf("@"), 0),
-      password: password,
+      password: passHash,
     });
 
     var requestOptions = {
@@ -45,13 +45,18 @@ const Login = () => {
           localStorage.setItem("userType", result.role);
           localStorage.setItem("Premium", false);
           localStorage.setItem("name", result.firstName);
+          localStorage.setItem("userID", result.id);
+          setZcustom("-1004");
           navigate("/");
         }
       })
       .catch((error) => alert("Account is not registered!"));
   };
   return (
-    <div style={{ zIndex: "1001" }} class="absolute inset-0 h-screen md:flex">
+    <div
+      style={{ zIndex: { zcustom } }}
+      class="absolute inset-0 h-screen md:flex"
+    >
       <div class=" relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-400 i justify-around items-center hidden">
         <div className=" p-20">
           <h1 class="text-white font-bold text-4xl font-sans text-center">
@@ -80,8 +85,12 @@ const Login = () => {
           }}
           class="bg-white"
         >
-          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">مرحبا مجدداً</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7 text-center">Welcome Back</p>
+          <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">
+            مرحبا مجدداً
+          </h1>
+          <p class="text-sm font-normal text-gray-600 mb-7 text-center">
+            Welcome Back
+          </p>
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"

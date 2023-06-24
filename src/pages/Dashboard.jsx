@@ -47,7 +47,7 @@ const Dashboard = () => {
     }
   }, localStorage.getItem("email"));
   return (
-    <div className="mt-12">
+    <div className=" mt-12">
       <div className="flex flex-wrap lg:flex-nowrap justify-center">
         <div className="bg-white shadow-md dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 mt-3  bg-no-repeat bg-cover bg-center">
           <div className="flex justify-between items-center">
@@ -139,8 +139,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex gap-10 flex-wrap justify-center ">
-        <div className="bg-white dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl w-1000">
+      <div className="  flex gap-10 flex-wrap justify-center ">
+        <div className=" bg-white dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl w-1000 ">
           <CarouselComponent />
         </div>
       </div>
