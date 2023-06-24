@@ -13,7 +13,7 @@ const Course = ({ name, image, status, isClosed, number }) => {
     <Card style={style.container}>
       <Grid item xs={8}>
         <Typography style={style.text}>
-          <p>{`مساق ${number}`}</p>
+          <p>الدرس</p>
           <p style={mainStyle.margin}>{` : `}</p>
           <p>{name}</p>
         </Typography>

@@ -51,7 +51,9 @@ const Main = () => {
                   onClick={() => {
                     if (!lesson.isClosed) {
                       console.log("redirected");
-                      navigate(`/Courses/${lesson.id}`);
+                      navigate(`/Courses/${lesson.id}`, {
+                        state: { lessons: course.lessons },
+                      });
                     }
                   }}
                 >

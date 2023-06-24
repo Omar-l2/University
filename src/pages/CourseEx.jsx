@@ -1,11 +1,18 @@
 import React from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useLocation, useParams } from "react-router-dom";
 import { Header } from "../components";
 import { useState, useEffect } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 
 export default function CourseEx() {
   const LessonID = useParams();
+  const location = useLocation();
+  const lessons = location.state.lessons;
+  const currentLessonIndex = lessons.indexOf(
+    lessons.find((l) => l.id == LessonID.id)
+  );
+  const nextLessonID = lessons[currentLessonIndex + 1];
+  const previousLessonID = lessons[currentLessonIndex - 1];
   const [lesson, setLesson] = useState("");
   const [TestID, setTestID] = useState("");
   const navigate = useNavigate();
@@ -30,7 +37,7 @@ export default function CourseEx() {
     };
 
     fetchCourses();
-  }, []);
+  }, [LessonID.id]);
 
   return (
     <>
@@ -61,11 +68,31 @@ export default function CourseEx() {
               اختبر
             </button>
           </div>
-          <div className="flex justify-between mt-6">
-            <button className=" w-1/12 text-xl px-4 py-2 bg-slate-500 text-white rounded-md">
+          <div
+            className={`flex ${
+              previousLessonID === undefined ? "flex-row-reverse" : ""
+            } justify-between mt-6`}
+          >
+            <button
+              hidden={previousLessonID === undefined}
+              onClick={() => {
+                navigate(`/Courses/${previousLessonID.id}`, {
+                  state: { lessons: lessons },
+                });
+              }}
+              className=" w-1/12 text-xl px-4 py-2 bg-slate-500 text-white rounded-md"
+            >
               الرجوع
             </button>
-            <button className=" w-1/12 px-4 text-xl py-2 bg-blue-500 text-white rounded-md">
+            <button
+              hidden={nextLessonID === undefined}
+              onClick={() => {
+                navigate(`/Courses/${nextLessonID.id}`, {
+                  state: { lessons: lessons },
+                });
+              }}
+              className=" w-1/12 px-4 text-xl py-2 bg-blue-500 text-white rounded-md"
+            >
               التالي
             </button>
           </div>
