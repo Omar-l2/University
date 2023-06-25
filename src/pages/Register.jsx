@@ -21,19 +21,16 @@ export default function Register() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    bcrypt.hash(password, 8, function (err, hash) {
-      setPasshash(hash);
-    });
-
     var raw1 = JSON.stringify({
       firstName: name,
       lastName: sname,
       email: email,
       username: email.substring(email.indexOf("@"), 0),
-      password: passHash,
+      password: password,
       role: userType,
     });
 
+    console.log(password);
     var requestOptions = {
       method: "POST",
       headers: myHeaders,

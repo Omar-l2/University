@@ -10,6 +10,7 @@ const UserProfile = ({ open, onClose }) => {
     const userData = {
       firstName: name,
       email: email,
+      role: localStorage.getItem("userType")
     };
 
     const requestOptions = {
@@ -44,7 +45,7 @@ const UserProfile = ({ open, onClose }) => {
             <div className="w-full  flex justify-center text-gray-600 mb-3">
               <img
                 src="/assets/Profile.jpg"
-                alt="Profile Image"
+                alt="Profile"
                 className="w-24  h-24 rounded-full"
               />
             </div>

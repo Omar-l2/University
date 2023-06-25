@@ -76,7 +76,7 @@ const Navbar = () => {
         <NavButton
           title="Logout"
           customFunc={() => {
-            localStorage.removeItem("email");
+            localStorage.clear();
             Navigate("/Login");
           }}
           color="red"

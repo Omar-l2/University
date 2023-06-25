@@ -7,19 +7,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [zcustom, setZcustom] = useState("1001");
-  const [passHash, setPasshash] = useState("");
   const SubmitForm = async (e) => {
     e.preventDefault();
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    const hash = await bcrypt.hash(password, 8);
-    setPasshash(hash);
     var raw1 = JSON.stringify({
       email: email,
       username: email.substring(email.indexOf("@"), 0),
-      password: passHash,
+      password: password,
     });
 
     var requestOptions = {
