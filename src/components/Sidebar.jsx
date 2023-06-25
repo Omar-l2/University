@@ -37,7 +37,7 @@ const Sidebar = () => {
     };
 
     fetchCourses();
-  }, []);
+  }, [courses]);
 
   return (
     <div className="top-2/4 w-11/12 ml-3 h-screen md md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">

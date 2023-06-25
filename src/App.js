@@ -33,7 +33,7 @@ const App = () => {
     if (!localStorage.getItem("email")) {
       redirect("/Login");
     }
-  }, localStorage.getItem("email"));
+  }, []);
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <BrowserRouter>

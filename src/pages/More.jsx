@@ -26,8 +26,6 @@ const More = () => {
         }
         const data = await response.json();
         setCourses(data);
-
-        console.log(data);
       } catch (error) {
         console.error("Error:", error);
       }

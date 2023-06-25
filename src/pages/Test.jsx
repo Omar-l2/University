@@ -1,16 +1,15 @@
 import React from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { Header } from "../components";
 import { useState, useEffect } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { TextareaAutosize } from "@mui/material";
 
 function Test() {
-  const [title, setTitle] = useState("");
-  const [explanation, setExplanation] = useState(
-    "Read  numbers from stdin and print their sum to stdout.Print the sum of the three numbers on a single line."
-  );
-  const [answer, setAnswer] = useState("يرجى تقديم الكود لعرض الإجابة");
+  const ExamID = useParams();
+  const location = useLocation();
+  const [exam, setExam] = useState("");
+  const [language, setLanguage] = useState("");
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
   );
@@ -18,26 +17,21 @@ function Test() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const courseData = {
-      name: title,
-      description: explanation,
-    };
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(courseData),
-    };
-
-    fetch(`http://localhost:8080/course/new`, requestOptions)
+    fetch(`http://localhost:8080/${ExamID.id}/submit`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Lesson created:", data);
+        console.log("Exam", data);
       })
       .catch((error) => console.error("Error:", error));
-
-    navigate("/More");
   };
+
+  useEffect(() => {
+    if(location.state !== null) {
+      setExam(location.state.exam);
+      setLanguage(location.state.language);
+    }
+  }, [location.state]);
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <Header category="" title="انشاء دورة جديد" />
@@ -50,7 +44,7 @@ function Test() {
             <label className="block mb-2  text-gray-700 text-xl font-semibold dark:text-gray-300">
               السؤال
             </label>
-            <label>{explanation}</label>
+            <label>{exam.question}</label>
           </div>
         </div>
 
@@ -63,8 +57,8 @@ function Test() {
           </label>
           <CodeEditor
             value={code}
-            language={"js"}
-            placeholder="Please enter JS code."
+            language={language}
+            placeholder={`Please enter ${language} code.`}
             onChange={(evn) => setCode(evn.target.value)}
             padding={15}
             style={{
@@ -76,11 +70,25 @@ function Test() {
           />
         </div>
         <div className="flex flex-row-reverse mb-4">
-          <div className="w-1/3 pr-2">
+          <div className="w-1/2 pr-2">
             <label className="block mb-2  text-gray-700 text-xl font-semibold dark:text-gray-300">
-              الجواب
+              الجواب المتوقع
             </label>
-            <label>{answer}</label>
+            <label>
+              {(exam.output || '').trim().split(',').map((i) => (
+                <li>{i}</li>
+              ))}
+            </label>
+          </div>
+          <div className="w-1/2 pr-2">
+            <label className="block mb-2  text-gray-700 text-xl font-semibold dark:text-gray-300">
+              البيانات المدخلة
+            </label>
+            <label>
+              {(exam.input || '').trim().split(',').map((i) => (
+                <li>{i}</li>
+              ))}
+            </label>
           </div>
         </div>
         <button
@@ -92,6 +100,9 @@ function Test() {
         <button
           type="button"
           className="w-full px-4 py-2 text-2xl text-white mt-3  bg-slate-500 hover:bg-slate-700 rounded-md "
+          onClick={() => {
+            navigate("/More")
+          }}
         >
           قائمة الدروس
         </button>

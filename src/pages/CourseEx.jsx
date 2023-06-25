@@ -20,7 +20,7 @@ export default function CourseEx() {
     `function add(a, b) {\n  return a + b;\n}`
   );
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchLesson = async () => {
       try {
         const response = await fetch(
           "http://localhost:8080/lesson/" + LessonID.id
@@ -30,13 +30,13 @@ export default function CourseEx() {
         }
         const data = await response.json();
         setLesson(data);
-        console.log(data);
+        console.log(data)
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    fetchCourses();
+    fetchLesson();
   }, [LessonID.id]);
 
   return (
@@ -60,8 +60,12 @@ export default function CourseEx() {
           /> */}
           <div className=" flex justify-center">
             <button
+              hidden={lesson.exam === undefined || lesson.exam.question === ""}
               onClick={() => {
-                navigate(`/Test/${TestID}`);
+                navigate(`/Test/${lesson.exam.id}`, {state: {
+                  exam: lesson.exam,
+                  language: lesson.language 
+                }});
               }}
               className=" w-1/12 px-4 text-xl py-2 bg-purple-600 text-white rounded-md"
             >

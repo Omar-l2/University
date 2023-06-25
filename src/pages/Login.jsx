@@ -17,6 +17,7 @@ const Login = () => {
     const hash = await bcrypt.hash(password, 8);
     setPasshash(hash);
     var raw1 = JSON.stringify({
+      email: email,
       username: email.substring(email.indexOf("@"), 0),
       password: passHash,
     });

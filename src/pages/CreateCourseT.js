@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const CreateCourseT = () => {
+  const location = useLocation();
   const [isUpdate, setUpdate] = useState(false);
   const [id, setID] = useState(-1);
-  const location = useLocation();
   const [title, setTitle] = useState("");
-  const [explanation, setExplanation] = useState("");
+  const [explanation, setExplanation] =  useState("");
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +23,8 @@ const CreateCourseT = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
     };
-    const url = isUpdate
-      ? "http://localhost:8080/course/" + id
-      : "http://localhost:8080/course/new";
+
+    const url = isUpdate ? "http://localhost:8080/course/" + id : "http://localhost:8080/course/new"
 
     fetch(url, requestOptions)
       .then((response) => response.json())
@@ -36,14 +35,15 @@ const CreateCourseT = () => {
 
     navigate("/More");
   };
+
   useEffect(() => {
-    if (location.state !== null) {
+    if(location.state !== null) {
       setTitle(location.state.title);
       setExplanation(location.state.explanation);
       setUpdate(location.state.isUpdate);
       setID(location.state.id);
     }
-  }, [location.state]);
+  }, [location.state])
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <Header category="" title="انشاء دورة جديد" />
@@ -88,7 +88,7 @@ const CreateCourseT = () => {
           type="submit"
           className="w-full px-4 py-2 text-2xl text-white bg-purple-500 hover:bg-purple-700 rounded-md "
         >
-          تسليم
+          {isUpdate ? "تعديل" : "تسليم"}
         </button>
       </form>
     </div>
