@@ -39,6 +39,7 @@ const CreateCourse = () => {
     e.preventDefault();
 
     const lessonData = {
+      authorId: localStorage.getItem("userID"),
       title: subtitle,
       body: explanation,
       language: Language,

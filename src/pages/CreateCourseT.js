@@ -1,8 +1,11 @@
 import { Header } from "../components";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CreateCourseT = () => {
+  const [isUpdate, setUpdate] = useState(false);
+  const [id, setID] = useState(-1);
+  const location = useLocation();
   const [title, setTitle] = useState("");
   const [explanation, setExplanation] = useState("");
   const navigate = useNavigate();
@@ -10,6 +13,7 @@ const CreateCourseT = () => {
     e.preventDefault();
 
     const courseData = {
+      authorId: localStorage.getItem("userID"),
       name: title,
       description: explanation,
     };
@@ -19,8 +23,11 @@ const CreateCourseT = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
     };
+    const url = isUpdate
+      ? "http://localhost:8080/course/" + id
+      : "http://localhost:8080/course/new";
 
-    fetch(`http://localhost:8080/course/new`, requestOptions)
+    fetch(url, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("Lesson created:", data);
@@ -29,6 +36,14 @@ const CreateCourseT = () => {
 
     navigate("/More");
   };
+  useEffect(() => {
+    if (location.state !== null) {
+      setTitle(location.state.title);
+      setExplanation(location.state.explanation);
+      setUpdate(location.state.isUpdate);
+      setID(location.state.id);
+    }
+  }, [location.state]);
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <Header category="" title="انشاء دورة جديد" />
