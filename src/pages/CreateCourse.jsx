@@ -1,3 +1,4 @@
+import { create } from "@mui/material/styles/createTransitions";
 import { Header } from "../components";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,7 @@ const CreateCourse = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [createTest, setCreateTest] = useState(false);
   const [Language, setLanguage] = useState("c++");
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const CreateCourse = () => {
       })
       .catch((error) => console.error("Error:", error));
 
-    navigate("/More");
+    createTest ? navigate("/NewTest") : navigate("/More");
   };
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10  dark:bg-secondary-dark-bg bg-white rounded-3xl">
@@ -89,7 +91,6 @@ const CreateCourse = () => {
             ))}
           </select>
         </div>
-
         <div className="flex flex-row-reverse mb-4">
           <div className="w-1/3 pr-2">
             <label className="block mb-2  text-gray-700 text-xl font-semibold dark:text-gray-300">
@@ -142,7 +143,6 @@ const CreateCourse = () => {
             </select>
           </div>
         </div>
-
         <div className="mb-4">
           <label
             htmlFor="explanation"
@@ -159,10 +159,20 @@ const CreateCourse = () => {
             required
           />
         </div>
+        <label className=" mr-3 mb-2 text-xl font-semibold text-gray-700 dark:text-gray-300">
+          انشاء اختبار
+        </label>
+        <input
+          className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+          type="checkbox"
+          onChange={(e) => {
+            setCreateTest(e.target.checked);
+          }}
+        />
 
         <button
           type="submit"
-          className="w-full px-4 py-2 text-2xl text-white bg-purple-500 hover:bg-purple-700 rounded-md "
+          className="w-full mt-4 px-4 py-2 text-2xl text-white bg-purple-500 hover:bg-purple-700 rounded-md "
         >
           تسليم
         </button>
